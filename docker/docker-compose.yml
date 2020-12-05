@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  mysql:
+    container_name: eriks_order_service_mysql
+    build: mysql/
+    ports:
+        - "3306:3306"
+
+  rabbitmq:
+    container_name: eriks_ecommerce_rabbitmq
+    build: rabbitmq/
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "15672:15672"
+      - "25672:25672"
+      - "4369:4369"
