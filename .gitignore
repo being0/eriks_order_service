@@ -24,6 +24,8 @@ nbdist/
 
 
 /bin
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 /target
 /target2
 *.class
@@ -51,3 +53,6 @@ nbactions.xml
 !.mvn/wrapper/maven-wrapper.jar
 !gradle/wrapper/gradle-wrapper.jar
 !gradlew.bat
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
