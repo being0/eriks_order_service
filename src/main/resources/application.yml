@@ -7,8 +7,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/auth/realms/spring-security-example
-          jwk-set-uri: http://localhost:8081/auth/realms/spring-security-example/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8085/auth/realms/spring-security-example
+          jwk-set-uri: http://localhost:8085/auth/realms/spring-security-example/protocol/openid-connect/certs
   rabbitmq:
     host: ${rabbitmq_ip:localhost}
     port: ${rabbitmq_port:5672}

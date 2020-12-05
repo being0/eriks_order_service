@@ -5,7 +5,6 @@ import nl.eriks.assignment.orderservice.service.event.OrderEventPublisher;
 import nl.eriks.assignment.orderservice.service.mapper.OrderMapper;
 import nl.eriks.assignment.orderservice.service.model.Order;
 import nl.eriks.assignment.orderservice.to.OrderTo;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -28,6 +27,8 @@ public class DefaultOrderService implements OrderService {
     private OrderRepository orderRepository;
     @Resource
     private OrderEventPublisher orderEventPublisher;
+    @Resource
+    private AuthenticationHolder authenticationHolder;
 
     @Override
     public OrderTo create(@Valid OrderTo orderTo) {
@@ -35,7 +36,7 @@ public class DefaultOrderService implements OrderService {
         Order order = orderMapper.mapToDomain(orderTo);
 
         // Prepare for creation
-        order.toCreate(extractJwt().getSubject());
+        order.toCreate(extractUserId());
 
         // Create order
         OrderTo createdOrder = orderMapper.mapToDto(orderRepository.save(order));
@@ -65,11 +66,11 @@ public class DefaultOrderService implements OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException("No order with id " + id + " exists!"));
 
-        if (!extractJwt().getSubject().equals(order.getUserId())) {
+        if (!extractUserId().equals(order.getUserId())) {
             // Raise the same message as when object is not found(Should not raise 403)
             // we should not reveal more info because of security
             // However we need to report this attempt to security service(here we just log it for simplicity, don't pull my leg :) the logger could be configured for security service)
-            log.error("User {} tried to access order {}", extractJwt().getSubject(), id);
+            log.error("User {} tried to access order {}", extractUserId(), id);
 
             throw new OrderNotFoundException("No order with id " + id + " exists!");
         }
@@ -131,13 +132,9 @@ public class DefaultOrderService implements OrderService {
         return orderMapper.mapToDto(order);
     }
 
-    private Date getCurrentTime() {
+    private String extractUserId() {
 
-        return new Date();
-    }
-
-    private Jwt extractJwt() {
-
-        return null;
+        // extract user id, in the security configuration JWT has been used and authentication name is equal to JWT subject
+        return authenticationHolder.getAuthentication().getName();
     }
 }
