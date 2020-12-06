@@ -22,7 +22,11 @@ spring:
         default-requeue-rejected: true
 
   jackson:
+    default-property-inclusion: NON_NULL
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
     serialization.INDENT_OUTPUT: false
+    serialization:
+      write-dates-as-timestamps: true
 
   jpa:
     database: mysql
