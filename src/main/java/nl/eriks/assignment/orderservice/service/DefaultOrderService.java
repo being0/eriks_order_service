@@ -139,7 +139,7 @@ public class DefaultOrderService implements OrderService {
 
     private String extractUserId() {
 
-        // extract user id, in the security configuration JWT has been used and authentication name is equal to JWT subject
-        return authenticationHolder.getAuthentication().getName();
+        // extract user id, in the security configuration JWT has been used and JWT subject is user id
+        return authenticationHolder.getAuthentication().getToken().getSubject();
     }
 }

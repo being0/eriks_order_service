@@ -1,6 +1,6 @@
 package nl.eriks.assignment.orderservice.service;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 /**
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
@@ -8,5 +8,5 @@ import org.springframework.security.core.Authentication;
  */
 public interface AuthenticationHolder {
 
-    Authentication getAuthentication();
+    JwtAuthenticationToken getAuthentication();
 }
