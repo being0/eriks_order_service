@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 @Getter
 @Setter
 @Table(name = "orders")
-public class Order {
+public class Order implements Domain {
 
     /**
      * Order Id
@@ -41,7 +41,6 @@ public class Order {
      */
     @Transient
     @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.NONE)
     private OrderStatus prevStatus;
 
     /**
@@ -90,6 +89,13 @@ public class Order {
         return OrderStatus.of(statusId);
     }
 
+    public static Order toCreate(String userId, BigDecimal price) {
+
+        Date currentTime = getCurrentTime();
+
+        return new Order(null, OrderStatus.created, price, currentTime, currentTime, userId);
+    }
+
     public Order toAccept() {
 
         setModified(getCurrentTime());
@@ -102,6 +108,14 @@ public class Order {
 
         setModified(getCurrentTime());
         setStatus(OrderStatus.canceled);
+
+        return this;
+    }
+
+    public Order toDelete() {
+
+        setModified(getCurrentTime());
+        setStatus(OrderStatus.deleted);
 
         return this;
     }
@@ -131,59 +145,7 @@ public class Order {
     }
 
 
-    public Order toCreate(String userId) {
-
-        setUserId(userId);
-        Date currentTime = getCurrentTime();
-        setId(null);
-        setCreated(currentTime);
-        setModified(currentTime);
-        setStatus(OrderStatus.created);
-
-        return this;
-    }
-
-    public Order toDelete() {
-
-        setModified(getCurrentTime());
-        setStatus(OrderStatus.deleted);
-
-        return this;
-    }
-
-    public OrderEvent createEvent() {
-
-        AbstractOrderEvent event;
-
-        switch (getStatus()) {
-            case created:
-                event = new OrderCreatedEvent();
-                break;
-            case accepted:
-                event = new OrderAcceptedEvent();
-                break;
-            case canceled:
-                event = new OrderCanceledEvent();
-                break;
-            case deleted:
-                event = new OrderDeletedEvent();
-                break;
-            default:
-                throw new RuntimeException("Not implemented for " + getStatus());
-        }
-
-        event.setOrderCreated(getCreated());
-        event.setOrderId(getId());
-        event.setPrevStatus(this.prevStatus);
-        event.setPrice(getPrice());
-        event.setUserId(getUserId());
-        event.setRaiseDate(getCurrentTime());
-
-        return event;
-    }
-
-
-    private Date getCurrentTime() {
+    public static Date getCurrentTime() {
 
         return new Date();
     }

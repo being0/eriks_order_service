@@ -1,7 +1,6 @@
 package nl.eriks.assignment.orderservice.service.event;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.eriks.assignment.orderservice.service.model.OrderEvent;
 import org.springframework.stereotype.Component;
 
 /**

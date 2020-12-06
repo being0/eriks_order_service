@@ -1,7 +1,5 @@
 package nl.eriks.assignment.orderservice.service.event;
 
-import nl.eriks.assignment.orderservice.service.model.OrderEvent;
-
 /**
  * Publishes order events
  *

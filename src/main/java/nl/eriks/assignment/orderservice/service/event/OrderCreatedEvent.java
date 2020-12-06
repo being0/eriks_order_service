@@ -1,7 +1,8 @@
-package nl.eriks.assignment.orderservice.service.model;
+package nl.eriks.assignment.orderservice.service.event;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.eriks.assignment.orderservice.service.model.Order;
 
 /**
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
@@ -11,4 +12,7 @@ import lombok.Setter;
 @Setter
 public class OrderCreatedEvent extends AbstractOrderEvent {
 
+    public OrderCreatedEvent(Order order) {
+        super(order);
+    }
 }

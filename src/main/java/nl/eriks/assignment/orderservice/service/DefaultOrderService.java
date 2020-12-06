@@ -1,16 +1,15 @@
 package nl.eriks.assignment.orderservice.service;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.eriks.assignment.orderservice.service.event.OrderEventPublisher;
+import nl.eriks.assignment.orderservice.service.event.*;
 import nl.eriks.assignment.orderservice.service.mapper.OrderMapper;
-import nl.eriks.assignment.orderservice.service.model.Order;
+import nl.eriks.assignment.orderservice.service.model.*;
 import nl.eriks.assignment.orderservice.to.OrderTo;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Date;
 
 /**
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
@@ -33,23 +32,22 @@ public class DefaultOrderService implements OrderService {
     @Override
     public OrderTo create(@Valid OrderTo orderTo) {
 
-        Order order = orderMapper.mapToDomain(orderTo);
-
         // Prepare for creation
-        order.toCreate(extractUserId());
+        Order order = Order.toCreate(extractUserId(), orderTo.getPrice());
 
-        // Create order
-        OrderTo createdOrder = orderMapper.mapToDto(orderRepository.save(order));
+        // Create order on repository
+        Order createdOrder = orderRepository.save(order);
 
         // Publish order created event
-        orderEventPublisher.publish(order.createEvent());
+        orderEventPublisher.publish(new OrderCreatedEvent(createdOrder));
 
-        return createdOrder;
+        return orderMapper.mapToDto(createdOrder);
     }
 
     @Override
     public OrderTo get(Long id) {
 
+        // Find order
         Order order = findOrder(id);
 
         return orderMapper.mapToDto(order);
@@ -63,6 +61,7 @@ public class DefaultOrderService implements OrderService {
      */
     private Order findOrder(Long id) {
 
+        // Find order
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException("No order with id " + id + " exists!"));
 
@@ -81,18 +80,19 @@ public class DefaultOrderService implements OrderService {
     @Override
     public OrderTo cancelOrder(Long orderId) {
 
+        // Find order
         Order order = findOrder(orderId);
 
         // Set the status canceled, this logic could be quit more complex(Starting a Sega...) and could be rejected in certain cases
-        order.toCancel();
+        Order cancelReadyOrder = order.toCancel();
 
         // Cancel order in repository
-        OrderTo canceledOrder = orderMapper.mapToDto(orderRepository.save(order));
+        Order canceledOrder = orderRepository.save(cancelReadyOrder);
 
         // Publish cancel order event
-        orderEventPublisher.publish(order.createEvent());
+        orderEventPublisher.publish(new OrderCanceledEvent(canceledOrder));
 
-        return canceledOrder;
+        return orderMapper.mapToDto(canceledOrder);
     }
 
 
@@ -104,15 +104,15 @@ public class DefaultOrderService implements OrderService {
                 .orElseThrow(() -> new OrderNotFoundException("No order with id " + orderId + " exists!"));
 
         // Set the status accepted
-        order.toAccept();
+        Order acceptReadyOrder = order.toAccept();
 
         // Accept order in repository
-        OrderTo acceptedOrder = orderMapper.mapToDto(orderRepository.save(order));
+        Order acceptedOrder = orderRepository.save(acceptReadyOrder);
 
         // Publish accept order event
-        orderEventPublisher.publish(order.createEvent());
+        orderEventPublisher.publish(new OrderAcceptedEvent(acceptedOrder));
 
-        return acceptedOrder;
+        return orderMapper.mapToDto(acceptedOrder);
     }
 
     @Override
@@ -121,15 +121,20 @@ public class DefaultOrderService implements OrderService {
         // I don't use soft delete deliberately because of the problems it has(indexing effects, extra stale entries...)
         // Instead we need to archive the deleted orders in another place
         // For simplicity archive process has not been implemented in this project
+
+        // Find order
         Order order = findOrder(id);
 
+        // Prepare to delete
+        Order deleteReadyOrder = order.toDelete();
+
         // Delete order in repository
-        orderRepository.delete(order.toDelete());
+        orderRepository.delete(deleteReadyOrder);
 
-        // Publish delete order event
-        orderEventPublisher.publish(order.createEvent());
+        // Publish order deleted event
+        orderEventPublisher.publish(new OrderDeletedEvent(deleteReadyOrder));
 
-        return orderMapper.mapToDto(order);
+        return orderMapper.mapToDto(deleteReadyOrder);
     }
 
     private String extractUserId() {

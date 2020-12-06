@@ -1,8 +1,9 @@
-package nl.eriks.assignment.orderservice.service.model;
+package nl.eriks.assignment.orderservice.service.event;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.eriks.assignment.orderservice.service.model.Order;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,4 +29,12 @@ public abstract class AbstractOrderEvent implements OrderEvent {
 
     protected Order.OrderStatus prevStatus;
 
+    public AbstractOrderEvent(Order order) {
+        setOrderCreated(order.getCreated());
+        setOrderId(order.getId());
+        setPrevStatus(order.getPrevStatus());
+        setPrice(getPrice());
+        setUserId(getUserId());
+        setRaiseDate(Order.getCurrentTime());
+    }
 }
