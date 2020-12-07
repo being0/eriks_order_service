@@ -42,7 +42,7 @@ class DefaultOrderServiceSpec extends Specification {
         orderService.jwtHolder = jwtHolder
     }
 
-    def 'Create should save on repository and publish OrderCreatedEvent event'() {
+    def '"create" should save on repository and publish OrderCreatedEvent event'() {
 
         given:
         OrderTo orderTo = new OrderTo(null, null, 121234001.87, null, null, null)

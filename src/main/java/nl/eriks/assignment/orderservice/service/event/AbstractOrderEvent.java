@@ -1,6 +1,7 @@
 package nl.eriks.assignment.orderservice.service.event;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import nl.eriks.assignment.orderservice.service.model.Order;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public abstract class AbstractOrderEvent implements OrderEvent {
 
     protected Long orderId;
@@ -33,8 +35,8 @@ public abstract class AbstractOrderEvent implements OrderEvent {
         setOrderCreated(order.getCreated());
         setOrderId(order.getId());
         setPrevStatus(order.getPrevStatus());
-        setPrice(getPrice());
-        setUserId(getUserId());
+        setPrice(order.getPrice());
+        setUserId(order.getUserId());
         setRaiseDate(Order.getCurrentTime());
     }
 }

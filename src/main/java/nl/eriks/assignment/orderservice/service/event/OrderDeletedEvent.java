@@ -1,7 +1,9 @@
 package nl.eriks.assignment.orderservice.service.event;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import nl.eriks.assignment.orderservice.service.model.Order;
 
 /**
@@ -10,6 +12,8 @@ import nl.eriks.assignment.orderservice.service.model.Order;
  */
 @Getter
 @Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
 public class OrderDeletedEvent extends AbstractOrderEvent {
 
     public OrderDeletedEvent(Order order) {
