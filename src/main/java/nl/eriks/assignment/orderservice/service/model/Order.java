@@ -93,6 +93,10 @@ public class Order implements Domain {
 
         Date currentTime = getCurrentTime();
 
+        if (price == null || BigDecimal.ZERO.compareTo(price) > 0) {
+            throw new ValidationException("Price can not be null or under zero!");
+        }
+
         return new Order(null, OrderStatus.created, price, currentTime, currentTime, userId);
     }
 

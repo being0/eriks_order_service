@@ -24,6 +24,21 @@ class OrderSpec extends Specification {
         order.getCreated() == order.getModified()
     }
 
+    def 'toCreate with null or minus price should throw ValidationException'() {
+
+        when:
+        Order.toCreate("valid_user_id", null);
+
+        then:
+        thrown(ValidationException)
+
+        when:
+        Order.toCreate("valid_user_id", -10.1);
+
+        then:
+        thrown(ValidationException)
+    }
+
     def 'toAccept should change status to accepted and modify the modified date'() {
 
         given:

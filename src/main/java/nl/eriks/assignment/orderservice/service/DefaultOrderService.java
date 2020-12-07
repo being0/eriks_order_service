@@ -34,6 +34,7 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     public OrderTo create(@Valid OrderTo orderTo) {
+        if (orderTo == null) throw new IllegalArgumentException("Order should not be null.");
 
         // Prepare for creation
         Order order = Order.toCreate(extractUserId(), orderTo.getPrice());
@@ -63,6 +64,7 @@ public class DefaultOrderService implements OrderService {
      * @return order
      */
     private Order findOrder(Long id) {
+        if (id == null) throw new IllegalArgumentException("Order id should not be null");
 
         // Find order
         Order order = orderRepository.findById(id)
