@@ -12,6 +12,9 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
+ * Default order service that provides basic crud operations.
+ * It persist order into injected repository and publish relevant events for crud operations.
+ *
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
  * @version 1, 12/04/2020
  */
@@ -27,7 +30,7 @@ public class DefaultOrderService implements OrderService {
     @Resource
     private OrderEventPublisher orderEventPublisher;
     @Resource
-    private AuthenticationHolder authenticationHolder;
+    private JwtHolder jwtHolder;
 
     @Override
     public OrderTo create(@Valid OrderTo orderTo) {
@@ -69,6 +72,7 @@ public class DefaultOrderService implements OrderService {
             // Raise the same message as when object is not found(Should not raise 403)
             // we should not reveal more info because of security
             // However we need to report this attempt to security service(here we just log it for simplicity, don't pull my leg :) the logger could be configured for security service)
+            // I wish to use sort of partitioning based on user, so to prevent such issues and improve isolation(not an extra "and user_id=xxx")
             log.error("User {} tried to access order {}", extractUserId(), id);
 
             throw new OrderNotFoundException("No order with id " + id + " exists!");
@@ -140,6 +144,6 @@ public class DefaultOrderService implements OrderService {
     private String extractUserId() {
 
         // extract user id, in the security configuration JWT has been used and JWT subject is user id
-        return authenticationHolder.getAuthentication().getToken().getSubject();
+        return jwtHolder.getJwt().getSubject();
     }
 }

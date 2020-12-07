@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 /**
  * Order publishing should be reliable and quick, it is suggested to use OUTBOX table and do the order transaction and
  * event generation in the same ACID transaction, and then another service/thread should read from OUTBOX table and send
- * the events. The other option is to use Event Sourcing pattern using a reliable provider.
+ * the events. The other option is to use Event Sourcing pattern using a reliable provider.(Two phase commit is slow and too complex)
  * <p>
- * However here for simplicity I just send to RabbitMq in a non atomic transaction.
+ * However here for simplicity I just send to RabbitMq in a non atomic transaction
  *
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
  * @version 1, 12/05/2020

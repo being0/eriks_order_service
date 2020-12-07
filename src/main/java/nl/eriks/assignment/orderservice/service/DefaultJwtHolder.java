@@ -1,7 +1,7 @@
 package nl.eriks.assignment.orderservice.service;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +10,16 @@ import org.springframework.stereotype.Component;
  * @version 1, 12/05/2020
  */
 @Component
-public class DefaultAuthenticationHolder implements AuthenticationHolder {
+public class DefaultJwtHolder implements JwtHolder {
 
+    /**
+     * Provides JWT from spring security context
+     *
+     * @return JWT token
+     */
     @Override
-    public JwtAuthenticationToken getAuthentication() {
+    public Jwt getJwt() {
 
-        return ((JwtAuthenticationToken)SecurityContextHolder.getContext().getAuthentication());
+        return ((JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication()).getToken();
     }
 }
