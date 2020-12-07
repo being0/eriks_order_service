@@ -3,7 +3,7 @@ package nl.eriks.assignment.orderservice.service;
 import lombok.extern.slf4j.Slf4j;
 import nl.eriks.assignment.orderservice.service.event.*;
 import nl.eriks.assignment.orderservice.service.mapper.OrderMapper;
-import nl.eriks.assignment.orderservice.service.model.*;
+import nl.eriks.assignment.orderservice.service.model.Order;
 import nl.eriks.assignment.orderservice.to.OrderTo;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -68,7 +68,7 @@ public class DefaultOrderService implements OrderService {
 
         // Find order
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException("No order with id " + id + " exists!"));
+                .orElseThrow(this::objectNotFoundException);
 
         if (!extractUserId().equals(order.getUserId())) {
             // Raise the same message as when object is not found(Should not raise 403)
@@ -77,7 +77,7 @@ public class DefaultOrderService implements OrderService {
             // I wish to use sort of partitioning based on user, so to prevent such issues and improve isolation(not an extra "and user_id=xxx")
             log.error("User {} tried to access order {}", extractUserId(), id);
 
-            throw new OrderNotFoundException("No order with id " + id + " exists!");
+            throw objectNotFoundException();
         }
 
         return order;
@@ -107,7 +107,7 @@ public class DefaultOrderService implements OrderService {
 
         // This method is called by sega transactions not implemented, so we should not check user principal
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("No order with id " + orderId + " exists!"));
+                .orElseThrow(this::objectNotFoundException);
 
         // Set the status accepted
         Order acceptReadyOrder = order.toAccept();
@@ -119,6 +119,11 @@ public class DefaultOrderService implements OrderService {
         orderEventPublisher.publish(new OrderAcceptedEvent(acceptedOrder));
 
         return orderMapper.mapToDto(acceptedOrder);
+    }
+
+    private OrderNotFoundException objectNotFoundException() {
+
+        return new OrderNotFoundException("No order exists with the specified id!");
     }
 
     @Override
