@@ -21,7 +21,7 @@
 
 ## Introduction
 
-The e-commerce project is consist of mainly two services order-service and logistic-service. order-service provides
+The e-commerce project is consist of mainly two services **order-service** and **logistic-service**. order-service provides
 basic CRUD operations on the Order domain model, and logistic-service is simply a listener and logger of order events.
 
 For simplicity of this assignment all these services are in the same git, but for a real project they need to be in separate git repositories.
@@ -42,9 +42,9 @@ Here are the main components of order-service
  
 #### * OrderController
 
-    OrderController provides REST CRUD API for the order-service. In a large Microservice project there should be an API gateway instead and internal calls are done using quicker protocol like [gRPC](https://grpc.io) 
+ OrderController provides REST CRUD API for the order-service. In a large Microservice project there should be an API gateway instead and internal calls are done using quicker protocol like [gRPC](https://grpc.io) 
     
-    Order controller provides these endpoints:
+ Order controller provides these endpoints:
     
     POST:     /api/1/orders
     
