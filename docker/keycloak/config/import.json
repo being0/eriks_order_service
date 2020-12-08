@@ -268,7 +268,7 @@
   "users" : [ {
     "id" : "a686c379-bd4d-48f5-a027-e68c687a9af6",
     "createdTimestamp" : 1533150870936,
-    "username" : "jim_user",
+    "username" : "reza_user",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
@@ -296,7 +296,7 @@
   }, {
     "id" : "bac53507-2462-4104-b850-9927ffc05f31",
     "createdTimestamp" : 1533150868796,
-    "username" : "joe_admin",
+    "username" : "mr_admin",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,

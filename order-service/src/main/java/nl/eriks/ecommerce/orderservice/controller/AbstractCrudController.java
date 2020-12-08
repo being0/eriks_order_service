@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
+ * Provides REST CRUD API for the order-service.
+ *
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
  * @version 1, 5/3/18
  */
