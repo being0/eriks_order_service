@@ -74,16 +74,16 @@ Order service provides create, acceptOrder(not for user but other services, shou
    
 #### * OrderRepository
     
-    Is repository of order object. Does the main CRUD operations on the persistence layer.
+   Is repository of order object. Does the main CRUD operations on the persistence layer.
 
 #### * OrderEventPublisher
     
-    Publishes events on create/acceptOrder/cancelOrder/delete operations. The DefaultOrderEventPublisher publishes events on the RabbitMQ.
-    It publishes OrderCreatedEvent/OrderAcceptedEvent/OrderCanceledEvent/OrderDeleted events.
+   Publishes events on create/acceptOrder/cancelOrder/delete operations. The DefaultOrderEventPublisher publishes events on the RabbitMQ.
+   It publishes OrderCreatedEvent/OrderAcceptedEvent/OrderCanceledEvent/OrderDeleted events.
 
 #### * JwtHolder
 
-    JwtHolder provides abstraction to access to access Jwt object. DefaultJwtHolder uses Spring context to extract Jwt.
+   JwtHolder provides abstraction to access to access Jwt object. DefaultJwtHolder uses Spring context to extract Jwt.
 
 ## HowToUse
 
