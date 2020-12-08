@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 import static nl.eriks.ecommerce.logisticservice.RabbitmqConfig.ORDER_QUEUE;
 
 /**
+ * Order event listener
+ *
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
  * @version 1, 12/08/2020
  */
 @Component
 @Slf4j
-public class OrderListener {
+public class OrderEventListener {
 
     /**
      * Listen on the queue.order_event that is bound to the topic.order_event

@@ -1,9 +1,6 @@
 package nl.eriks.ecommerce.orderservice.service.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
@@ -28,7 +25,6 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 public class RabbitmqConfig {
 
     public static final String ORDER_TOPIC = "topic.order_event";
-    public static final String ORDER_QUEUE = "queue.order_event";
 
     @Autowired
     private ConnectionFactory rabbitConnectionFactory;
@@ -90,19 +86,6 @@ public class RabbitmqConfig {
     @Bean
     TopicExchange orderExchange() {
         return new TopicExchange(ORDER_TOPIC);
-    }
-
-    @Bean
-    public Queue orderQueue() {
-
-        return new Queue(ORDER_QUEUE);
-    }
-
-    @Bean
-    public Binding orderQueueBinding() {
-
-        // Define binding to all order events into the queue.order_event
-        return BindingBuilder.bind(orderQueue()).to(orderExchange()).with("*");
     }
 
 }

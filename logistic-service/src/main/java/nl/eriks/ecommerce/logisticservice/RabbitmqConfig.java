@@ -16,7 +16,7 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 
 /**
  * Config RabbitmqTemplate to use jackson for serialization.
- * Also create queue.order_event queue that listens on the topic.order_event
+ * Also create queue.order_event queue that listens to the topic.order_event
  *
  * @author <a href="mailto:raliakbari@gmail.com">Reza Aliakbari</a>
  * @version 1, 12/05/2020
