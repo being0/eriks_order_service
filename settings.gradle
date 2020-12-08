@@ -2,5 +2,3 @@ rootProject.name = 'eriks-ecommerce'
 
 include 'order-service'
 include 'logistic-service'
-include 'logistic-service'
-
