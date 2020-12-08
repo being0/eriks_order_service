@@ -32,6 +32,12 @@ order-service uses port 8080 and Keycloak uses port 8085.
 
 to improve maintainability and Readability of the code SOLID principals, Design patterns(DI, IOC, Domain/Service/Repository(DDD)) have been applied.
 
+So to be Resilient, according to [**Reactive Manifesto**](https://www.reactivemanifesto.org/), The system should stay responsive in the face of failure.
+To achieve resiliency certain attributes should be considered. Some of them could be achieved by using cloud technologies technologies for load balancing and replication(The application has been designed to be easily load balanced).
+But some of them should come from design like [**Isolation**](https://www.reactivemanifesto.org/glossary#Isolation) and [**Delegation**](https://www.reactivemanifesto.org/glossary#Delegation).
+Since the design of this application is Microservice the isolation is at its heart, also to achieve Delegation we should use **Asynchronous Messaging**. order-service already applied this practice by raising
+its events into **topic.order_event** topic in the RabbitMQ. So in this case for example logistic-service errors is not cascaded into the order-service.
+
 Below I describe the components that has been used in this project from a top down view. 
 
 ## Components
