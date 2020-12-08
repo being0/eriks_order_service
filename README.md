@@ -101,7 +101,7 @@ The you can use this token to call APIs. for example:
 
     curl -X POST -H 'Content-Type: application/json' -H 'Authorization: bearer [token]' -i http://localhost:8080/api/1/orders --data '{"price":"100.23"}'
     
-## Docker compose 
+## Docker 
 
 To start Keycloak(Auth and Identity server:) and MySql and RabbitMQ cd to docker folder and then run this command: 
 
