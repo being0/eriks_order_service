@@ -56,9 +56,9 @@ Here are the main components of order-service
           
 #### * OrderService
 
-    Order service is the logic of the application. It persists orders using OrderRepository and if any change occurs it raises an event using OrderEventPublisher.
+Order service is the logic of the application. It persists orders using OrderRepository and if any change occurs it raises an event using OrderEventPublisher.
     
-    Order service provides create, acceptOrder(not for user but other services, should be used in Sega transaction), cancelOrder and delete functions.
+Order service provides create, acceptOrder(not for user but other services, should be used in Sega transaction), cancelOrder and delete functions.
     
 #### * Order
 
