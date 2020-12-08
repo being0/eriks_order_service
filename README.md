@@ -2,11 +2,14 @@
 
 - [Introduction](#Introduction)
 - [Components](#components)
-    * [Packer](#packer)
-    * [PackerLogic](#packerlogic)    
-    * [KnapsackSolver](#knapsacksolver)    
-    * [KnapsackRepository](#knapsackrepository)    
-    * [ProblemParser](#problemparser)    
+    * [OrderController](#OrderController)
+    * [OrderService](#OrderService)    
+    * [Order](#Order)    
+    * [OrderTo](#OrderTo)    
+    * [OrderMapper](#OrderMapper)    
+    * [OrderRepository](#OrderRepository)    
+    * [OrderEventPublisher](#OrderEventPublisher)    
+    * [JwtHolder](#JwtHolder)    
 
 - [HowToUse](#howtouse)    
 - [Docker](#docker)
@@ -37,7 +40,7 @@ Single responsibility and interface segregation has been considered on designing
 Also dependencies are injected using Spring framework. Data Transfer Object(DTO) pattern has been used to separate inside model from outside.
 Here are the main components of order-service
  
-* OrderController
+####* OrderController
 
     OrderController provides REST CRUD API for the order-service. In a large Microservice project there should be an API gateway instead and internal calls are done using quicker protocol like [gRPC](https://grpc.io) 
     
@@ -51,34 +54,34 @@ Here are the main components of order-service
     
     DELETE:   /api/1/orders/{id}
           
-* OrderService
+####* OrderService
 
     Order service is the logic of the application. It persists orders using OrderRepository and if any change occurs it raises an event using OrderEventPublisher.
     
     Order service provides create, acceptOrder(not for user but other services, should be used in Sega transaction), cancelOrder and delete functions.
     
-* Order
+####* Order
 
   Order is the main domain and aggregate of the order-service project.
 
-* OrderTo
+####* OrderTo
 
   OrderTo is [**Data Transfer Object(DTO)**](https://en.wikipedia.org/wiki/Data_transfer_object) for the order domain model.
 
-* OrderMapper
+####* OrderMapper
 
    maps order domains to order transfer object and vice versa.
    
-* OrderRepository
+####* OrderRepository
     
     Is repository of order object. Does the main CRUD operations on the persistence layer.
 
-* OrderEventPublisher
+####* OrderEventPublisher
     
     Publishes events on create/acceptOrder/cancelOrder/delete operations. The DefaultOrderEventPublisher publishes events on the RabbitMQ.
     It publishes OrderCreatedEvent/OrderAcceptedEvent/OrderCanceledEvent/OrderDeleted events.
 
-* JwtHolder
+####* JwtHolder
 
     JwtHolder provides abstraction to access to access Jwt object. DefaultJwtHolder uses Spring context to extract Jwt.
 
