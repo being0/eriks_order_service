@@ -25,7 +25,7 @@ public class OrderEventListener {
     public void listen(OrderEvent orderEvent) {
 
         // Just log the message for now
-        log.info("Message read from {} is -----> {} ", ORDER_QUEUE, orderEvent);
+        log.info("A message received from {}. Message -----> {} ", ORDER_QUEUE, orderEvent);
     }
 
 }
