@@ -12,10 +12,11 @@ public interface OrderService extends CrudService<OrderTo, Long> {
 
     /**
      * Cancels order
+     *
      * @param orderId order id
      * @return order
      */
-    OrderTo cancelOrder(Long orderId);
+    OrderTo cancelOrder(Long orderId) throws OrderNotFoundException;
 
     /**
      * Accept order, this is called by in a sega transaction(not user)
@@ -23,5 +24,5 @@ public interface OrderService extends CrudService<OrderTo, Long> {
      * @param orderId
      * @return
      */
-    OrderTo acceptOrder(Long orderId);
+    OrderTo acceptOrder(Long orderId) throws OrderNotFoundException;
 }

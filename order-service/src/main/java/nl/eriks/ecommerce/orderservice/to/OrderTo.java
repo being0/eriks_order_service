@@ -1,5 +1,6 @@
 package nl.eriks.ecommerce.orderservice.to;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +51,7 @@ public class OrderTo {
     /**
      * Order owner user id
      */
+    @JsonProperty("user_id")
     private String userId;
 
     public enum OrderStatusTo {

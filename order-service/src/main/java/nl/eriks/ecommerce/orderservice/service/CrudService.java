@@ -1,5 +1,7 @@
 package nl.eriks.ecommerce.orderservice.service;
 
+import nl.eriks.ecommerce.orderservice.service.model.ValidationException;
+
 import javax.validation.Valid;
 
 /**
@@ -16,7 +18,7 @@ public interface CrudService<TO, ID> {
      * @param to Transferred object
      * @return Created transferred object
      */
-    TO create(@Valid TO to);
+    TO create(@Valid TO to) throws ValidationException;
 
     /**
      * Gets a transferred object by its id
@@ -24,7 +26,7 @@ public interface CrudService<TO, ID> {
      * @param id id of transferred object
      * @return Found transferred object
      */
-    TO get(ID id);
+    TO get(ID id) throws OrderNotFoundException;
 
 //    TO update(@Valid TO to);
 
@@ -34,5 +36,5 @@ public interface CrudService<TO, ID> {
      * @param id id of transferred object
      * @return Deleted transferred object
      */
-    TO delete(ID id);
+    TO delete(ID id) throws OrderNotFoundException;
 }
