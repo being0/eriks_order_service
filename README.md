@@ -89,7 +89,7 @@ Order service provides create, acceptOrder(not for user but other services, shou
 
 #### * JwtHolder
 
-   JwtHolder provides abstraction to access to access Jwt object. DefaultJwtHolder uses Spring context to extract Jwt.
+   JwtHolder provides abstraction to access Jwt object. DefaultJwtHolder uses Spring context to extract Jwt.
 
 ## HowToUse
 
@@ -113,7 +113,7 @@ To start Keycloak(Auth and Identity server:) and MySql and RabbitMQ cd to docker
 Gradle is on charge for this project.
 To build this project on the root of the project run this command:
 
-    $ ./gradlew run
+    $ ./gradlew build
     
 ## WishList
 
