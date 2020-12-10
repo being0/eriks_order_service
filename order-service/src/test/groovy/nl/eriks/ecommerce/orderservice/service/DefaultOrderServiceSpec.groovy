@@ -72,7 +72,6 @@ class DefaultOrderServiceSpec extends Specification {
     def '"get" normal behavior should return values from repository'() {
 
         given:
-        // Illegal access
         orderRepository.findById(1L) >> Optional.of(new Order(1L, Order.OrderStatus.created, 100.1 as BigDecimal, new Date(), new Date(), validUserId))
 
         when:
