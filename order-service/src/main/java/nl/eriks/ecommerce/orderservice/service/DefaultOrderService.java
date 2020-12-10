@@ -35,6 +35,9 @@ public class DefaultOrderService implements OrderService {
     @Override
     public OrderTo create(@Valid OrderTo orderTo) {
         if (orderTo == null) throw new IllegalArgumentException("Order should not be null.");
+        // Open to address in a real project: we need to consider situations that user tries this method multiple times
+        // (it could be because they get error even after the creation, like network problems..)
+        // so we should not make duplicate(what ever it means) orders
 
         // Prepare for creation
         Order order = Order.toCreate(extractUserId(), orderTo.getPrice());
