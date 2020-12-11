@@ -117,4 +117,20 @@ To build this project on the root of the project run this command:
     
 ## WishList
 
-I liked to add integration tests(API tests) for REST services in the next release. 
+* Integration test
+
+    I liked to add integration tests(API tests) for REST services in the next release.
+
+* Reliable events
+    
+    Both actions of writing on persistence and raising events should be atomic and reliable.
+    
+* Idempotency and multiple identical requests 
+
+    We need to consider that client/UI may send its request multiple times(but means it really once).
+    The repeating calls could happen because of any error that could happen between(like network issue) a transaction or a client/UI issue.
+    So on APIs what is called duplicate action should not happen. For example we should not create multiple 
+    orders with similar properties for the same user if he/she does't mean it really(We need to define the Duplication word here).
+    So we would need to be [Idempotent](https://restfulapi.net/idempotent-rest-apis/) on the what is called duplicated actions. POST normally is not considered as idempotent
+    but we need consider duplicate calls(or we may want to leave it to client to totally address it) 
+     

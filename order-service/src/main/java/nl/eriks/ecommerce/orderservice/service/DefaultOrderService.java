@@ -92,6 +92,9 @@ public class DefaultOrderService implements OrderService {
         // Find order
         Order order = findOrder(orderId);
 
+        // Make the API idempotent
+        if (order.getStatus() == Order.OrderStatus.canceled) return orderMapper.mapToDto(order);
+
         // Set the status canceled, this logic could be quit more complex(Starting a Sega...) and could be rejected in certain cases
         Order cancelReadyOrder = order.toCancel();
 
@@ -111,6 +114,9 @@ public class DefaultOrderService implements OrderService {
         // This method is called by sega transactions not implemented, so we should not check user principal
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(this::objectNotFoundException);
+
+        // Make the API idempotent
+        if (order.getStatus() == Order.OrderStatus.accepted) return orderMapper.mapToDto(order);
 
         // Set the status accepted
         Order acceptReadyOrder = order.toAccept();
