@@ -32,7 +32,6 @@ spring:
     database: mysql
 
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://${db_ip:localhost}/${db_name:order_service}?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF8
     username: ${db_username:root}
     password: ${db_password:root}
