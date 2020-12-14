@@ -124,7 +124,7 @@ class OrderControllerSpec extends Specification {
                 .andExpect(jsonPath("user_id").value("valid_user"))
     }
 
-    def '"PUT /api/1/orders/{id}/cancel" when ObjectNotFound then expect 400'() {
+    def '"PUT /api/1/orders/{id}/cancel" when OrderNotFoundException then expect 404'() {
         given:
         Long id = 12L
         orderService.cancelOrder(id) >> { ID ->
@@ -152,7 +152,7 @@ class OrderControllerSpec extends Specification {
         response.andExpect(status().isOk())
     }
 
-    def '"DELETE /api/1/orders/{id}" when ObjectNotFound then expect 400'() {
+    def '"DELETE /api/1/orders/{id}" when OrderNotFoundException then expect 404'() {
         given:
         Long id = 12L
         orderService.delete(id) >> { ID ->
