@@ -24,6 +24,8 @@ public class OrderEventListener {
     @RabbitListener(queues = ORDER_QUEUE)
     public void listen(OrderEvent orderEvent) {
 
+        // Make sure the listener is Idempotent if the broker config is at-least-once(or any configuration that could send duplicate messages)
+
         // Just log the message for now
         log.info("A message received from {}. Message -----> {} ", ORDER_QUEUE, orderEvent);
     }
